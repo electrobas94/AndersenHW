@@ -1,0 +1,5 @@
+{"id_html": "prod_sal_f", "title": "Фруктовый салат", "image_src": "images/sal_f.jpg", "text":"Берем и нарезаем кубиками все ингридиенты. Высыпаем их в какую нить посуду и все готово.", "ingr":["prod_hurma","prod_mand","prod_banan"], "count":[3, 4, 1]};
+{"id_html": "prod_sal_1", "title": "Салат 1", "image_src": "images/s_2.jpg", "text":"Берем и нарезаем перемешиваем.", "ingr":["prod_ogur","prod_tomate","prod_oil_fl"], "count":[2, 2, 100]};
+{"id_html": "prod_sal_2", "title": "Салат 2", "image_src": "images/s_3.jpg", "text":"Берем и нарезаем перемешиваем.", "ingr":["prod_ogur","prod_tomate","prod_smet", "prod_l"], "count":[2, 2, 100, 1]};
+{"id_html": "prod_mk", "title": "Мл.Коктель", "image_src": "images/k.jpg", "text":"Просто перемешать ингридиенты", "ingr":["prod_milk","prod_egg"], "count":[1, 2]};
+{"id_html": "prod_gr", "title": "Гренка", "image_src": "images/gr.jpg", "text":"Чет смешать и пожарить нужно", "ingr":["prod_milk","prod_egg", "prod_bread", "prod_oil_fl"], "count":[1, 2, 1, 1]}

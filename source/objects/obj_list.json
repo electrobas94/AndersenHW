@@ -1,0 +1,16 @@
+{"id_html": "prod_bread", "title": "Хлеб", "image_src": "images/bread.jpg" ,"nt":"шт."};
+{"id_html": "prod_milk", "title": "Молоко", "image_src": "images/milk.jpg" ,"nt":"л"};
+{"id_html": "prod_egg", "title": "Яйцо", "image_src": "images/egg.jpg","nt":"шт."};
+{"id_html": "prod_sos", "title": "Сосиски", "image_src": "images/sos.jpg","nt":"гр."};
+{"id_html": "prod_oil_fl", "title": "Масло", "image_src": "images/oil_fl.jpg" ,"nt":"гр."};
+{"id_html": "prod_ogur", "title": "Огурец", "image_src": "images/ogur.jpg" ,"nt":"шт."};
+{"id_html": "prod_tomate", "title": "Помидор", "image_src": "images/tomate.jpg" ,"nt":"шт."};
+{"id_html": "prod_l", "title": "Зел. лук", "image_src": "images/l.jpg" ,"nt":"шт."};
+{"id_html": "prod_smet", "title": "Сметана", "image_src": "images/smet.jpg" ,"nt":"гр."};
+{"id_html": "prod_banan", "title": "Банан", "image_src": "images/banan.jpg" ,"nt":"шт."};
+{"id_html": "prod_mand", "title": "Мандарин", "image_src": "images/mand.jpg" ,"nt":"шт."};
+{"id_html": "prod_hurma", "title": "Хурма", "image_src": "images/hurma.jpg" ,"nt":"шт."};
+{"id_html": "prod_sal_f", "title": "Фрукт.салат", "image_src": "images/sal_f.jpg" ,"nt":"шт."};{"id_html": "prod_sal_1", "title": "Салат 1", "image_src": "images/s_2.jpg" ,"nt":"шт."};
+{"id_html": "prod_sal_2", "title": "Салат 2", "image_src": "images/s_3.jpg" ,"nt":"шт."};
+{"id_html": "prod_mk", "title": "Мл.Коктель", "image_src": "images/k.jpg" ,"nt":"шт."};
+{"id_html": "prod_gr", "title": "Гренка", "image_src": "images/gr.jpg" ,"nt":"шт."}

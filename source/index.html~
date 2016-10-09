@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+    	#holod
+    	{
+    		background-image:"images/h_open.png";
+		}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  	<div class="container-fluid">
+  		<div class="col-sm-1"></div>
+  		<div class="col-sm-10">
+	  		<div class="page-header">
+	  			<h1>Холодильник онлайн<small> + рецепты</small></h1>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="panel panel-default">
+  						<div class="panel-heading">Ходолильник</div>
+					  <div class="panel-body" id="holod">
+					    Panel content
+					  </div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="panel panel-default">
+  						<div class="panel-heading">Выбранная полка</div>
+					  <div class="panel-body">
+					    Panel content
+					  </div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="panel panel-default">
+  						<div class="panel-heading">Магазин</div>
+					  <div class="panel-body">
+					    Panel content
+					  </div>
+					</div>
+				</div>
+				<div>
+			</div>
+			<div  class="row">
+			</div>
+		</div>
+		<div class="col-sm-1"></div>
+  	</div>
+  </body>
+</html>
