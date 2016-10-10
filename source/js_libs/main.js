@@ -1,3 +1,11 @@
+// События и утилиты
+
+function $ ( id )
+{
+    return document.getElementById ( id );
+}
+
+
 var product_manager;
 
 function BodyOnLoad()
@@ -42,8 +50,8 @@ function drop(ev)
 
 function RangeMove()
 {
-    var val_def =  document.getElementById( "count_spinbox" );
-    var val_rang = document.getElementById( "count_range" );
+    var val_def =  $( "count_spinbox" );
+    var val_rang = $( "count_range" );
     
     val_def.setAttribute( 'value', val_rang.value );
 }
@@ -88,9 +96,9 @@ function OnClickCreateRecip()
 {
     if( product_manager.recip_manager.CreateRecip() )
     {
-        document.getElementById( "res_recip" ).innerHTML = "<span style='color:#65b565'>Создано успешно</span>";
+        $( "res_recip" ).innerHTML = "<span style='color:#65b565'>Создано успешно</span>";
     }
     else
-        document.getElementById( "res_recip" ).innerHTML = "<span style='color:#b56565'>На столе мало продуктов</span>";
+        $( "res_recip" ).innerHTML = "<span style='color:#b56565'>На столе мало продуктов</span>";
         
 }

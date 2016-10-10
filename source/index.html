@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Холодильник онлайн</title>
     <meta content="">
     <link rel="stylesheet" href="bootstrap.min.css">
 		<link rel="stylesheet" href="css/main.css">
@@ -9,72 +9,127 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		
 		<script src="js_libs/prod_class.js"></script>
 		<script src="js_libs/messeger_class.js"></script>
 		<script src="js_libs/prod_manager_class.js"></script>
 		<script src="js_libs/recepies_manager_class.js"></script>
-		<script src="js_libs/actions.js"></script>
-
+		<script src="js_libs/main.js"></script>
   </head>
+	
   <body onload="BodyOnLoad();" onresize="BodyOnResize();">
 		
+				<!-- Count devider BEGIN-->
 				<div class="col-sm-4"  id = "count_devider" >
 					<div class="panel panel-default">
 						<div class="panel-heading"><b>Добавление на полку</b></div>
 						<div class="panel-body">
+							
 							<p>Пожалуйста, укажите количество.</p>
-							<input type="range" min="1" max = "1000" class="col-sm-12" id = "count_range" onchange = "RangeMove();" value = "5">
+							
+							<input type="range" min="1" max = "1000"
+										 class="col-sm-12" id = "count_range"
+										 onchange = "RangeMove();" value = "5">
+							
 							<hr>
 							<div class="input-group">
-								<input type="number"  class="col-sm-10 form-control" value="1213" id = "count_spinbox">
+								<input type="number"  class="col-sm-10 form-control"
+											 value="1213" id = "count_spinbox">
 								<span class="input-group-addon" id = "count_nt">шт</span>
-							</div>
-							<hr>
+							</div><hr>
+							
 							<div class="btn-group col-sm-12 ">
-								<button class="btn btn-default col-sm-6" onclick = "product_manager.AddProdOnShelf();">Принять</button>
-								<button class="btn btn-default col-sm-6" onclick = "product_manager.CountDevederHide();" >Отмена</button>
+								
+								<button class="btn btn-default col-sm-6"
+												onclick = "product_manager.AddProdOnShelf();">
+									Принять
+								</button>
+								
+								<button class="btn btn-default col-sm-6"
+												onclick = "product_manager.CountDevederHide();" >
+									Отмена
+								</button>
+								
 							</div>
 						</div>
 					</div>
-				</div><!-- Count devider END-->
+				</div>
+				<!-- Count devider END-->
 				
   	<div class="container" id = "all_container">
 			<div  class="col-sm-12">
-				
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="page-header">
-							<h1>Холодильник онлайн<small>  (Выбор активной полки по клику. Перетаскивание из магазина на активную полку, с полки на
-							другие полки, в мусор и на стол, клик по продукту на полке - показать рецепты, Клик по рецепту - показать ингридиенты)</small></h1>
+							<h1>
+								Холодильник онлайн<small>  (Выбор активной полки по клику.
+								Перетаскивание из магазина на активную полку, с полки на
+								другие полки, в мусор и на стол, клик по продукту на полке -
+								показать рецепты, Клик по рецепту - показать ингридиенты)</small>
+							</h1>
 					</div>
 				</div><!-- Row header end-->
 					
 				<div class="row">
 					<div class="col-sm-12"><div class="panel panel-default">
-					<div class="panel-heading"><big><b>Управление продуктами</b></big></div>
+					<div class="panel-heading">
+						<big><b>Управление продуктами</b></big>
+					</div>
 					<div class="panel-body">
 						
 						<div class="col-sm-4 icebox">
 							<div class="thumbnail h_img icebox" id="h_img">
 								<div class="col-sm-2" ></div>
 								<div class="col-sm-4" style="height: 100%; ;padding-right: 0px">
-									<a class="thumbnail h_door h_door_up" id = "shelf_1" ondragover="allowDrop(event);" onclick = "product_manager.SelectShelf(1);" ondrop ="OnDropShelf(event);"><b>Верхние полки</b></a>
-									<a class="thumbnail h_door h_door_down" id = "shelf_2" ondragover="allowDrop(event);" onclick = "product_manager.SelectShelf(2);" ondrop ="OnDropShelf(event);"><b>Нижние полки</b></a>
+									
+									<a class="thumbnail h_door h_door_up"
+										 id = "shelf_1" ondragover="allowDrop(event);"
+										 onclick = "product_manager.SelectShelf(1);"
+										 ondrop ="OnDropShelf(event);">
+										<b>Верхние полки</b>
+									</a>
+									
+									<a class="thumbnail h_door h_door_down"
+										 id = "shelf_2" ondragover="allowDrop(event);"
+										 onclick = "product_manager.SelectShelf(2);"
+										 ondrop ="OnDropShelf(event);">
+										<b>Нижние полки</b>
+									</a>
+									
 								</div>
 								<div class="col-sm-4"  style="height: 100%;padding-left: 0px">
-									<a class="thumbnail h_door h_door_up" id = "shelf_3" ondragover="allowDrop(event);" onclick = "product_manager.SelectShelf(3);" ondrop ="OnDropShelf(event);"><b>Дверь верхняя</b></a>
-									<a class="thumbnail h_door h_door_down" id = "shelf_4" ondragover="allowDrop(event);" onclick = "product_manager.SelectShelf(4);" ondrop ="OnDropShelf(event);"><b>Дверь нижняя</b></a>
+									
+									<a class="thumbnail h_door h_door_up"
+										 id = "shelf_3" ondragover="allowDrop(event);"
+										 onclick = "product_manager.SelectShelf(3);"
+										 ondrop ="OnDropShelf(event);">
+										<b>Дверь верхняя</b>
+									</a>
+									
+									<a class="thumbnail h_door h_door_down"
+										 id = "shelf_4" ondragover="allowDrop(event);"
+										 onclick = "product_manager.SelectShelf(4);"
+										 ondrop ="OnDropShelf(event);">
+										<b>Дверь нижняя</b>
+									</a>
+									
 								</div>
 								<div class="col-sm-2" ></div>
 							</div>
-							<div class="thumbnail h_door h_door_up trash" id = "shelf_3"  ondragover="allowDrop(event);" ondrop ="DropInTrash(event);"><div class="col-sm-4" ></div><b>Выбросить</b></div>
+							<div class="thumbnail h_door h_door_up trash"
+									 id = "shelf_3"  ondragover="allowDrop(event);"
+									 ondrop ="DropInTrash(event);">
+								<div class="col-sm-4" ></div><b>Выбросить</b>
+							</div>
 						</div>
 						
 						<div class="col-sm-4">
 							<div class="panel panel-default">
-								<div class="panel-heading" id = "pan_hed_shelf"><b style = "color:#CC6565;">Полка не выбрана</b></div>
-								<div id = "active_shelf" ondrop ="drop(event);"  class="panel-body y_scroll h_img" ondragover="allowDrop(event);">
+								<div class="panel-heading" id = "pan_hed_shelf">
+									<b style = "color:#CC6565;">Полка не выбрана</b>
+								</div>
+								<div id = "active_shelf" ondrop ="drop(event);"
+										 class="panel-body y_scroll h_img"
+										 ondragover="allowDrop(event);">
 								</div>
 							</div>
 						</div>
@@ -97,7 +152,9 @@
 							
 						<div class="col-sm-4">
 							<div class="panel panel-default">
-								<div class="panel-heading" id = "pan_head_replist"><b style = "color:#CC6565;">Продукт не выбран</b></div>
+								<div class="panel-heading" id = "pan_head_replist">
+									<b style = "color:#CC6565;">Продукт не выбран</b>
+								</div>
 								<div class="panel-body panel_recepr_2 y_scroll" id ="rep_list">
 								</div><hr>
 								<div class="input-group">
@@ -115,20 +172,32 @@
 								</div>
 							</div>
 							<div class="panel panel-default ">
-								<div class="panel-heading">Стол<small> (перетащите продукты из холодильника) </small></div>
-								<div class="panel-body panel_recepr_double_body y_scroll"  id = "shelf_5"  ondragover="allowDrop(event);" ondrop ="OnDropShelf(event);">
+								<div class="panel-heading">
+									Стол<small> (перетащите продукты из холодильника) </small>
+								</div>
+								<div class="panel-body panel_recepr_double_body y_scroll"
+										 id = "shelf_5"  ondragover="allowDrop(event);"
+										 ondrop ="OnDropShelf(event);">
 								</div>
 							</div>
 						</div>
 							
 							<div class="col-sm-4">
 							<div class="panel panel-default">
-								<div class="panel-heading">Инструкция и создание</div>
+								<div class="panel-heading">
+									Инструкция и создание
+								</div>
 								<div class="panel-body panel_recepr">
 									<div>
 										<label id = "res_recip"></label>
-										<textarea rows="4" cols="50"  class="form-control col-sm-12 text_area" readonly="true" id = "instruction"></textarea><hr>
-										<button class="btn btn-default col-sm-12" onclick = "OnClickCreateRecip();" readonly="readonly">Создать блюдо</button>
+										<textarea rows="4" cols="50"  class="form-control col-sm-12 text_area"
+															readonly="true" id = "instruction">
+										</textarea><hr>
+										<button class="btn btn-default col-sm-12"
+														onclick = "OnClickCreateRecip();"
+														readonly="readonly">
+											Создать блюдо
+										</button>
 									</div>
 								</div>
 							</div>

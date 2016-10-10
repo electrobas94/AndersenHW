@@ -1,3 +1,8 @@
+/*
+ * Основной класс. Управляет списками продуктов на полкахб столе и в магазине
+ * Является контейнером для второстипенных классов
+ */
+
 function ProductManager()
 {
     this.sel_obj = null;
@@ -22,7 +27,7 @@ ProductManager.prototype.GetNewId = function()
     this.counter_id++;
     
     return str;
-}
+};
 
 ProductManager.prototype.ActivateItemProd = function(id)
 {
@@ -31,10 +36,10 @@ ProductManager.prototype.ActivateItemProd = function(id)
     if( obj === null )
         return;
     
-    document.getElementById( "pan_head_replist" ).innerHTML = obj.title + " используться в:";
+    $( "pan_head_replist" ).innerHTML = obj.title + " используться в:";
     
     var r_list = this.recip_manager.GetRecips( id.toString().split("$")[0]  );
-    var r_list_html = document.getElementById("rep_list");
+    var r_list_html = $("rep_list");
     
     r_list_html.innerHTML = "";
     
@@ -44,21 +49,23 @@ ProductManager.prototype.ActivateItemProd = function(id)
 
 ProductManager.prototype.ChangeShelf = function( id, num_shelf )
 {
-    var obj = this.SearthProdInStore(id, this.product_list_in_icebox );
+    var icebox_l = this.product_list_in_icebox;
+    var obj = this.SearthProdInStore(id, icebox_l );
     
     if( obj === null )
         return;
+    
     obj.shelf = num_shelf;
     
     // delete duplicates item
-    for ( var i = 0; i < this.product_list_in_icebox.length; i++ )
+    for ( var i = 0; i < icebox_l.length; i++ )
     {
-        if( obj.id_html != this.product_list_in_icebox[i].id_html
-           && obj.id_html.split("$")[0] == this.product_list_in_icebox[i].id_html.split("$")[0]
-           &&  obj.shelf == this.product_list_in_icebox[i].shelf)
+        if( obj.id_html != icebox_l[i].id_html &&
+            obj.stor_id == icebox_l[i].stor_id &&
+            obj.shelf   == icebox_l[i].shelf)
         {
-            obj.count = parseInt( obj.count ) + parseInt( this.product_list_in_icebox[i].count );
-            this.product_list_in_icebox.splice(i,1);
+            obj.count = parseInt( obj.count ) + parseInt( icebox_l[i].count );
+            icebox_l.splice(i,1);
         }
     }
     
@@ -67,59 +74,68 @@ ProductManager.prototype.ChangeShelf = function( id, num_shelf )
 
 ProductManager.prototype.SelectShelf = function(num)
 {
-    var str ="";
-    switch ( num)
+    var str = "";
+    
+    switch ( num )
     {
         case 1: str = "Верхние полки"; break;
         case 2: str = "Нижние полки"; break;
         case 3: str = "Дверь верхняя"; break;
         case 4: str = "Дверь нижняя"; break; 
     };
-    document.getElementById( "pan_hed_shelf" ).innerHTML = str; 
+    
+    $( "pan_hed_shelf" ).innerHTML = str;
+    
     this.active_shelf = num;
     this.RePrintProductActiveShelfs();
 };
 
 ProductManager.prototype.DelProdFromShelf = function(id)
 {
-    for( var i = 0; i < this.product_list_in_icebox.length; i++ )
-    {
-        var tmp = this.product_list_in_icebox[i];
-        if( tmp.id_html == id )
+    var icebox_l = this.product_list_in_icebox;
+        
+    for( var i = 0; i < icebox_l.length; i++ )
+        if( icebox_l[i].id_html == id )
         {
-            this.product_list_in_icebox.splice(i,1);
+            icebox_l.splice( i, 1 );
             break;
         }
-    }
     
     this.RePrintProductActiveShelfs();
 };
 
 ProductManager.prototype.AddProdOnShelf = function()
 {
-    var activ_self = document.getElementById( "active_shelf" );
-    var count = document.getElementById( "count_spinbox" ).value;
+    var activ_self  = $( "active_shelf" );
+    var count       = $( "count_spinbox" ).value;
+    var icebox_l    = this.product_list_in_icebox;
     
-    for ( var i = 0; i < this.product_list_in_icebox.length; i++ )
-        if( this.product_list_in_icebox[i].id_html.split("$")[0] == this.sel_obj.id_html &&
-           this.product_list_in_icebox[i].shelf == this.active_shelf)
+    for ( var i = 0; i < icebox_l.length; i++ )
+    {
+        if( icebox_l[i].stor_id == this.sel_obj.id_html &&
+            icebox_l[i].shelf   == this.active_shelf )
             {
-                this.product_list_in_icebox[i].count = parseInt (this.product_list_in_icebox[i].count ) + parseInt( count );
+                icebox_l[i].count = parseInt( icebox_l[i].count ) + parseInt( count );
+                
                 this.RePrintProductActiveShelfs();
                 this.CountDevederHide();
+                
                 return;
             }
+    }
+    
     var tmp = new ProductInIcebox( this.sel_obj, this.GetNewId(), count, this.active_shelf);
     
-    this.product_list_in_icebox.push(tmp);
+    icebox_l.push(tmp);
     activ_self.innerHTML += tmp.toHTML();
     
     this.CountDevederHide();
 };
 
-ProductManager.prototype.AddProdWindowShow = function(id)
+//Если можно то показываем окно добавление продукта
+ProductManager.prototype.AddProdWindowShow = function( id )
 {
-    var obj = this.SearthProdInStore(id, this.product_list_store );
+    var obj = this.SearthProdInStore( id, this.product_list_store );
     
     if( obj === null)
         return;
@@ -132,34 +148,31 @@ ProductManager.prototype.AddProdWindowShow = function(id)
     this.CountDevederShow( 100, obj.nt );
 };
 
-ProductManager.prototype.CountDevederShow = function(def, nt)
+//Показывает окно выбора количества продуктов
+ProductManager.prototype.CountDevederShow = function( def, nt )
 {
-    var nt_t =  document.getElementById( "count_nt" );
-    var val_def =  document.getElementById( "count_spinbox" );
-    
-    nt_t.innerHTML = nt;
-    val_def.setAttribute('value', def);
+    $( "count_nt" ).innerHTML = nt;
+    $( "count_spinbox" ).setAttribute('value', def);
         
-    var h =  document.getElementById( "all_container" ).clientHeight;
-    var obj = document.getElementById ( "count_devider" );
+    var obj = $( "count_devider" );
     
-    var w = Math.round ( document.body.clientWidth /2 - (obj.clientWidth / 2 ) );
-    h = Math.round ( h/2 - (obj.clientHeight / 2) );
+    var w = Math.round( document.body.clientWidth /2 - ( obj.clientWidth / 2 ) );
     
-    obj.setAttribute('style','top: ' + h + 'px;left: ' + w + 'px;visibility:visible;');
+    var h =  $( "all_container" ).clientHeight;
+    h = Math.round ( h/2 - ( obj.clientHeight / 2) );
+    
+    obj.setAttribute( 'style','top: ' + h + 'px;left: ' + w + 'px;visibility:visible;');
 };
 
 ProductManager.prototype.CountDevederHide = function()
 {
-    var obj = document.getElementById ( "count_devider" );
-    
-    obj.setAttribute('style','visible:hidden');
+    $( "count_devider" ).setAttribute('style','visible:hidden');
 };
 
 ProductManager.prototype.GetProdInStore = function( id )
 {
     return this.SearthProdInStore( id, this.product_list_store );
-}
+};
 
 ProductManager.prototype.SearthProdInStore = function( id, list)
 {
@@ -175,10 +188,11 @@ ProductManager.prototype.SearthProdInStore = function( id, list)
 
 ProductManager.prototype.PrintProductsStore = function()
 {
-    var conteiner = document.getElementById ( "store" );
+    var conteiner = $ ( "store" );
+    var stor_l = this.product_list_store;
     
-    for( var i = 0; i < this.product_list_store.length; i++)
-        conteiner.innerHTML += this.product_list_store[i].toHTML();
+    for( var i = 0; i < stor_l.length; i++)
+        conteiner.innerHTML += stor_l[i].toHTML();
 };
 
 ProductManager.prototype.RePrintProductActiveShelfs = function()
@@ -189,24 +203,22 @@ ProductManager.prototype.RePrintProductActiveShelfs = function()
 
 ProductManager.prototype.ClearProductOnAllShelf = function()
 {
-    var activ_self = document.getElementById( "active_shelf" );
- 
-    activ_self.innerHTML = "";
-    
-    document.getElementById( "shelf_5" ).innerHTML = "";
+    $( "active_shelf" ).innerHTML = "";
+    $( "shelf_5" ).innerHTML = "";
 };
 
 ProductManager.prototype.PrintProductActiveShelfs = function()
 {
-    var obj = document.getElementById( "active_shelf" );
-    var s_5 = document.getElementById( "shelf_5" );
+    var obj = $( "active_shelf" );
+    var s_5 = $( "shelf_5" );
+    var icebox_l = this.product_list_in_icebox;
     
-    for( var i = 0; i < this.product_list_in_icebox.length; i++)
+    for( var i = 0; i < icebox_l.length; i++ )
     {
-        if( this.active_shelf == this.product_list_in_icebox[i].shelf )
-            obj.innerHTML += this.product_list_in_icebox[i].toHTML();
+        if( this.active_shelf == icebox_l[i].shelf )
+            obj.innerHTML += icebox_l[i].toHTML();
             
-        if ( +this.product_list_in_icebox[i].shelf == 5 )
-            s_5.innerHTML += this.product_list_in_icebox[i].toHTML();
+        if ( +icebox_l[i].shelf == 5 )
+            s_5.innerHTML += icebox_l[i].toHTML();
     }
 };

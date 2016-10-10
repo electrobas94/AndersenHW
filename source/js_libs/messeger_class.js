@@ -1,3 +1,7 @@
+/*
+ * Класс коллкция методов для общения с сервером
+ */
+
 function Messager()
 {
 }
@@ -23,23 +27,26 @@ Messager.prototype.GetObjectsListFromFile = function( obj_list , file , constr )
     
     data = data.toString().split(";");
 
-    for(var i = 0; i < data.length; i++ )
+    for( var i = 0; i < data.length; i++ )
     {
-        var tmp = JSON.parse( data[i] );
-        tmp = new constr(tmp);
-        obj_list.push(tmp);
+        let tmp = JSON.parse( data[i] );
+        tmp = new constr( tmp );
+        obj_list.push( tmp );
     }
 };
 
-Messager.prototype.GetObjectsStore = function( obj_store_list )
+Messager.prototype.GetObjectsStore = function( obj_store_l )
 {
-    this.GetObjectsListFromFile( obj_store_list, "objects/obj_list.json", ProductInStore);
+    this.GetObjectsListFromFile( obj_store_l,
+                                    "objects/obj_list.json",
+                                    ProductInStore);
 };
 
 Messager.prototype.GetObjectsRecips = function( )
 {
-    var rcips_list = [];
-    this.GetObjectsListFromFile( rcips_list, "objects/reciep_list.json", Recip);
+    var rcips_l = [];
     
-    return rcips_list;
+    this.GetObjectsListFromFile( rcips_l, "objects/reciep_list.json", Recip);
+    
+    return rcips_l;
 };
