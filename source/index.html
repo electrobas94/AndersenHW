@@ -16,7 +16,7 @@
 		<script src="js_libs/main.js"></script>
   </head>
 	
-  <body onload="BodyOnLoad();" onresize="BodyOnResize();">
+  <body>
 		
 				<!-- Count devider BEGIN-->
 				<div class="col-sm-4"  id = "count_devider" >
@@ -28,7 +28,7 @@
 							
 							<input type="range" min="1" max = "1000"
 										 class="col-sm-12" id = "count_range"
-										 onchange = "RangeMove();" value = "5">
+										 value = "5">
 							
 							<hr>
 							<div class="input-group">
@@ -39,13 +39,11 @@
 							
 							<div class="btn-group col-sm-12 ">
 								
-								<button class="btn btn-default col-sm-6"
-												onclick = "product_manager.AddProdOnShelf();">
+								<button class="btn btn-default col-sm-6" id="btn_ok">
 									Принять
 								</button>
 								
-								<button class="btn btn-default col-sm-6"
-												onclick = "product_manager.CountDevederHide();" >
+								<button class="btn btn-default col-sm-6"  id="btn_cancel">
 									Отмена
 								</button>
 								
@@ -81,43 +79,29 @@
 								<div class="col-sm-2" ></div>
 								<div class="col-sm-4" style="height: 100%; ;padding-right: 0px">
 									
-									<a class="thumbnail h_door h_door_up"
-										 id = "shelf_1" ondragover="allowDrop(event);"
-										 onclick = "product_manager.SelectShelf(1);"
-										 ondrop ="OnDropShelf(event);">
+									<a class="thumbnail h_door h_door_up" id = "shelf_1">
 										<b>Верхние полки</b>
 									</a>
 									
-									<a class="thumbnail h_door h_door_down"
-										 id = "shelf_2" ondragover="allowDrop(event);"
-										 onclick = "product_manager.SelectShelf(2);"
-										 ondrop ="OnDropShelf(event);">
+									<a class="thumbnail h_door h_door_down" id = "shelf_2">
 										<b>Нижние полки</b>
 									</a>
 									
 								</div>
 								<div class="col-sm-4"  style="height: 100%;padding-left: 0px">
 									
-									<a class="thumbnail h_door h_door_up"
-										 id = "shelf_3" ondragover="allowDrop(event);"
-										 onclick = "product_manager.SelectShelf(3);"
-										 ondrop ="OnDropShelf(event);">
+									<a class="thumbnail h_door h_door_up" id = "shelf_3">
 										<b>Дверь верхняя</b>
 									</a>
 									
-									<a class="thumbnail h_door h_door_down"
-										 id = "shelf_4" ondragover="allowDrop(event);"
-										 onclick = "product_manager.SelectShelf(4);"
-										 ondrop ="OnDropShelf(event);">
+									<a class="thumbnail h_door h_door_down" id = "shelf_4">
 										<b>Дверь нижняя</b>
 									</a>
 									
 								</div>
 								<div class="col-sm-2" ></div>
 							</div>
-							<div class="thumbnail h_door h_door_up trash"
-									 id = "shelf_3"  ondragover="allowDrop(event);"
-									 ondrop ="DropInTrash(event);">
+							<div class="thumbnail h_door h_door_up trash" id = "trash">
 								<div class="col-sm-4" ></div><b>Выбросить</b>
 							</div>
 						</div>
@@ -127,9 +111,7 @@
 								<div class="panel-heading" id = "pan_hed_shelf">
 									<b style = "color:#CC6565;">Полка не выбрана</b>
 								</div>
-								<div id = "active_shelf" ondrop ="drop(event);"
-										 class="panel-body y_scroll h_img"
-										 ondragover="allowDrop(event);">
+								<div id = "active_shelf" class="panel-body y_scroll h_img">
 								</div>
 							</div>
 						</div>
@@ -175,9 +157,7 @@
 								<div class="panel-heading">
 									Стол<small> (перетащите продукты из холодильника) </small>
 								</div>
-								<div class="panel-body panel_recepr_double_body y_scroll"
-										 id = "shelf_5"  ondragover="allowDrop(event);"
-										 ondrop ="OnDropShelf(event);">
+								<div class="panel-body panel_recepr_double_body y_scroll" id = "shelf_5">
 								</div>
 							</div>
 						</div>
@@ -194,7 +174,7 @@
 															readonly="true" id = "instruction">
 										</textarea><hr>
 										<button class="btn btn-default col-sm-12"
-														onclick = "OnClickCreateRecip();"
+														id = "create_new_item"
 														readonly="readonly">
 											Создать блюдо
 										</button>

@@ -5,6 +5,7 @@
 
 function ProductManager()
 {
+
     this.sel_obj = null;
     this.product_list_store = [];
     this.product_list_in_icebox = [];
