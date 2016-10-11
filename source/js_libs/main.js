@@ -29,7 +29,7 @@ function SetActionsOnDoc()
 {
     window.addEventListener ( "resize", WindowOnResize );
     
-    $( "btn_ok" ).addEventListener( "click", function(){ product_manager.AddProdOnShelf(); } );
+    $( "btn_ok" ).addEventListener( "click", function(){ product_manager.AddProdOnShelfFromStore(); } );
     $( "btn_cancel" ).addEventListener( "click",  function(){product_manager.CountDevederHide();} );
     
     $( "count_range" ).addEventListener( "change" , RangeMove );
@@ -63,7 +63,7 @@ function SetActionsOnDoc()
     $( "active_shelf" ).addEventListener( "dragover", allowDrop );
     $( "active_shelf" ).addEventListener( "drop", drop );
     
-    $( "create_new_item" ).addEventListener( "click", OnClickCreateRecip );
+    $( "create_new_item" ).addEventListener( "click", OnClickCreateProdOfRecip );
 }
 
 function allowDrop(ev){
@@ -130,12 +130,14 @@ function OnRecipClick(ev)
 {
     var id = ev.target.getAttribute( 'id' );
     
+    id = id.split('$')[0];
+    
     product_manager.recip_manager.SelectRecipe ( id );
 }
 
-function OnClickCreateRecip()
+function OnClickCreateProdOfRecip()
 {
-    if( product_manager.recip_manager.CreateRecip() )
+    if( product_manager.recip_manager.CreateProdOfRecip() )
         $( "res_recip" ).innerHTML = "<span style='color:#65b565'>Создано успешно</span>";
     else
         $( "res_recip" ).innerHTML = "<span style='color:#b56565'>На столе мало продуктов</span>";
