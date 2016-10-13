@@ -61,10 +61,14 @@
                             полке - показать рецепты, Клик по рецепту - показать ингридиенты. Добавить
 																новый продукт или рецепт можно в редакторе, все изменения сохранятся на сервере)
                             </small>
-														<div class="btn-group-lg">
-															<button class="btn btn-default">Перейти к редактору</button>
-															<button class="btn btn-default">Перейти к холодильнику</button>
-														</div>
+							<div class="btn-group-lg">
+								<button class="btn btn-default" id="open_edit">
+									Перейти к редактору
+								</button>
+								<button class="btn btn-default" id="open_icebox">
+									Перейти к холодильнику
+								</button>
+							</div>
                         </h1>
                     </div>
                 </div>
@@ -82,25 +86,33 @@
                                 </big>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-4 icebox">
+                                <div class="col-sm-4 icebox" id="icebox">
                                     <div class="thumbnail h_img icebox" id="h_img">
                                         <div class="col-sm-2"></div>
                                         
                                         <div class="col-sm-4" style="height: 100%; ;padding-right: 0px">
                                             <a class="thumbnail h_door h_door_up" id="shelf_1">
-                                            <b>Верхние полки</b>
+												<b  class="col-sm-12">
+													Верхние полки
+												</b>
                                             </a>
                                             <a class="thumbnail h_door h_door_down" id="shelf_2">
-                                            <b>Нижние полки</b>
+												<b class="col-sm-12">
+													Нижние полки
+												</b>
                                             </a>
                                         </div>
                                         
                                         <div class="col-sm-4" style="height: 100%;padding-left: 0px">
                                             <a class="thumbnail h_door h_door_up" id="shelf_3">
-                                            <b>Дверь верхняя</b>
+												<b class="col-sm-12">
+													Дверь верхняя
+												</b>
                                             </a>
                                             <a class="thumbnail h_door h_door_down" id="shelf_4">
-                                            <b>Дверь нижняя</b>
+												<b class="col-sm-12">
+													Дверь нижняя
+												</b>
                                             </a>
                                         </div>
                                         
@@ -108,11 +120,89 @@
                                     </div>
                                     
                                     <div class="thumbnail h_door h_door_up trash" id="trash">
-                                        <div class="col-sm-4">
-                                        </div>
                                         <b>
-                                            Выбросить
-                                        </b>
+                                        Выбросить
+										</b>
+										<small>
+											(Перетащить)
+										</small>
+                                        
+                                    </div>
+                                </div><!-- Конец панели с холодильником  -->
+								
+								<div class="col-sm-4" id="editor">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+													Редактор
+                                        </div>
+                                        <div class="panel-body">
+											<p>
+												<b>
+													Создание рецепта
+												</b>
+											</p>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+															Итоговый продукт
+															<small>
+																(Перетащить сюда)
+															</small>
+												</div>
+												<div class="panel-body" id="prod_result">
+													<div class="prod_item"></div>
+												</div>
+											</div>
+											
+											<div class="panel trash_2" id="trash_2">
+													<b>
+														Убрать
+													</b></br>
+													<small>
+														(Перетащить сюда)
+													</small>
+											</div>
+										
+											<div class="panel">
+												Инструкция создания
+												<textarea rows=3 class="form-control"></textarea>
+											</div>
+											
+											<div class="panel col-sm-12">
+												<button class="btn btn-default col-sm-12">
+													Создать рецепт
+												</button>
+											</div>
+											<hr  class="col-sm-10">
+											<div class="col-sm-12 panel">
+												<p>
+													<b>
+														Создание продукта
+													</b>
+												</p>
+												
+												<div class="input-group">
+													<span class="input-group-addon new_ob_input">Название</span>
+													<input type="text" class="form-control">
+												</div>
+												
+												<div class="input-group">
+													<span class="input-group-addon new_ob_input">URL иконки</span>
+													<input type="text" class="form-control">
+												</div>
+												
+												<div class="input-group">
+													<span class="input-group-addon new_ob_input">Мера колва</span>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											
+											<div class="panel col-sm-12">
+												<button class="btn btn-default col-sm-12">
+													Создать продукт
+												</button>
+											</div>
+											
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -132,7 +222,7 @@
                                 <!-- Панель магазина  -->
                                 <div class="col-sm-4">
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">
+                                        <div class="panel-heading" id="stor_head">
                                             Магазин
                                         </div>
                                         <div class="panel-body y_scroll h_img" id="store">
@@ -147,7 +237,7 @@
                 
                 <!-- Строка с рецептами  -->
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" id="recipt_block">
                         
                         <div class="panel panel-default">
                             <div class="panel-heading">
