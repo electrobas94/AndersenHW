@@ -9,12 +9,29 @@ function Messager()
 Messager.prototype.GetData = function ( file )
 {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', file, false); //sync
+    xhr.open('Get', file, false); //sync
+
     xhr.send(null);
     
     if (xhr.status != 200)
     {
         alert('Error' + xhr.status + ': ' + xhr.statusText);
+        return;
+    }
+    
+    return xhr.responseText; 
+};
+
+Messager.prototype.SetData = function ( cmd, data )
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open( 'Post', cmd, false ); //sync
+
+    xhr.send(data);
+    
+    if (xhr.status != 200 )
+    {
+        alert( 'Error' + xhr.status + ': ' + xhr.statusText );
         return;
     }
     
