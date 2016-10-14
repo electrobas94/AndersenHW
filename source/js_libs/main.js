@@ -78,6 +78,9 @@ function SetActionsOnDoc()
     
     $( "open_edit" ).addEventListener( "click", OpenEditor );
     $( "open_icebox" ).addEventListener( "click", OpenIceBox );
+    
+    $( "new_prod" ).addEventListener( "click", function(){ product_manager.AddNewProd(); } );
+    $( "append_recip" ).addEventListener( "click", function(){ product_manager.recip_manager.AddNewRecip(); } );
 }
 
 function OpenIceBox()
@@ -87,7 +90,7 @@ function OpenIceBox()
     $( "recipt_block" ).setAttribute( "style", "display:block;" );
     $( "stor_head" ).innerHTML = "Магазин";
     
-    $( "pan_hed_shelf" ).innerHTML = '<b style="color:#CC6565;">Полка не выбрана</b>';
+    product_manager.SelectShelf( product_manager._prev_active_shelf );
     
     $( "store" ).innerHTML = "";
     
@@ -104,8 +107,9 @@ function OpenEditor()
     
     WindowOnResize();
     
-    product_manager.active_shelf = 6;
-    $("active_shelf").innerHTML = "";
+    product_manager._prev_active_shelf = active_shelf;
+    
+    product_manager.SelectShelf( 6 );
 }
 
 function allowDrop(ev){
@@ -136,7 +140,10 @@ function DropInResult(ev)
     var obj = product_manager.GetProdInStore ( obg_id );
     
     if( obj !== null )
+    {
         $( "prod_result" ).innerHTML =  obj.toHTML();
+        product_manager.result_obj = obj;
+    }
 }
 
 function RangeMove()

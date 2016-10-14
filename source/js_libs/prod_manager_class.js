@@ -19,6 +19,9 @@ function ProductManager()
     
     this.active_shelf = -1;
     
+    this._prev_active_shelf = -1;
+    this.result_obj = "";
+    
     this.recip_manager = new RecipsManager( this.messeger.GetObjectsRecips() );
 }
 
@@ -88,7 +91,9 @@ ProductManager.prototype.SelectShelf = function(num)
         case 1: str = "Верхние полки"; break;
         case 2: str = "Нижние полки"; break;
         case 3: str = "Дверь верхняя"; break;
-        case 4: str = "Дверь нижняя"; break; 
+        case 4: str = "Дверь нижняя"; break;
+        case 6: str = "Ингридиенты рецепта <small>(Перетаскиваем сюда)</small>";break;
+        default: str = '<b style="color:#CC6565;">Полка не выбрана</b>';break;
     };
     
     $( "pan_hed_shelf" ).innerHTML = str;
@@ -273,4 +278,18 @@ ProductManager.prototype.SetItemAction = function( id )
     var tmp = $( id );
     tmp.addEventListener( "click", OnItemClick );
     tmp.addEventListener( "dragstart", drag );
+};
+
+// Добавляет новый продукт на сервер
+ProductManager.prototype.AddNewProd = function()
+{
+    var n_prod = {};
+    
+    n_prod.id_html = "prod_" + this.product_list_store.length +"p";
+    
+    n_prod.title = $( "new_prod_name" ).value;
+    n_prod.image_src = $( "url_image" ).value;
+    n_prod.nt = $( "type_count" ).value;
+    
+    this.messeger.AppendNewProd( ";\n" + JSON.stringify( n_prod ) );
 };

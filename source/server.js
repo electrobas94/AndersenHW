@@ -22,13 +22,17 @@ http.createServer(function(request, response) {
     {
         console.log("add_new_recip: ", body); 
         let fs = require('fs');
-        fs.writeFileSync('objects/reciep_list.json', body );
+        fs.appendFileSync('objects/reciep_list.json', body );
+        
+        response.end("OK");
     }
     else if ( url == "/add_prod" )
     {
         console.log("add_new_product: ", body);
         let fs = require('fs');
-        fs.writeFileSync('objects/obj_list.json', body );
+        fs.appendFileSync('objects/obj_list.json', body );
+        
+        response.end("OK");
     }
     else
         file.serve(request, response);

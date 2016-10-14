@@ -14,6 +14,38 @@ function RecipsManager( recips_list )
         this.repic_list.push( new  Recip( recips_list[i] ) );
 }
 
+RecipsManager.prototype.AddNewRecip = function()
+{
+    if ( product_manager.result_obj === null )
+        return;
+    
+    var ingr    = [];
+    var count    = [];
+    var icebox_l = product_manager.product_list_in_icebox;
+    
+    for (var i = 0; i < icebox_l.length; i++)
+        if ( icebox_l[i].shelf == 6 )
+        {
+            ingr.push( icebox_l[i].stor_id );
+            count.push( icebox_l[i].count );
+        }
+        
+    if ( ingr.length === 0 )
+        return;
+    
+    var n_recip = {};
+    var r_o = product_manager.result_obj;
+    
+    n_recip.id_html     = r_o.id_html;
+    n_recip.image_src   = r_o.image_src;
+    n_recip.title       = r_o.title;
+    n_recip.text        = $( "text_nrecp" ).value;
+    n_recip.ingr        = ingr;
+    n_recip.count       = count;
+    
+    product_manager.messeger.AppendNewRecipt (  ";\n" + JSON.stringify( n_recip ) );
+};
+
 RecipsManager.prototype.CreateProdOfRecip = function()
 {
     if (this.active_recip === null)

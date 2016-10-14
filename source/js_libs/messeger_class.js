@@ -9,7 +9,7 @@ function Messager()
 Messager.prototype.GetData = function ( file )
 {
     var xhr = new XMLHttpRequest();
-    xhr.open('Get', file, false); //sync
+    xhr.open('Post', file, false); //sync
 
     xhr.send(null);
     
@@ -50,6 +50,16 @@ Messager.prototype.GetObjectsListFromFile = function( obj_list , file , constr )
         tmp = new constr( tmp );
         obj_list.push( tmp );
     }
+};
+
+Messager.prototype.AppendNewRecipt = function( new_recip )
+{
+    this.SetData( "/add_recip" , new_recip );
+};
+
+Messager.prototype.AppendNewProd = function( new_prod )
+{
+    this.SetData( "/add_prod" , new_prod );
 };
 
 Messager.prototype.GetObjectsStore = function( obj_store_l )
