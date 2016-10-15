@@ -5,7 +5,10 @@
 }
 
 .h_door {
+    padding-top: 50%;
     background-color: rgba(150,150,0,0.2);
+    text-align: center;
+    background-color: rgba( 255, 255, 255, 0.5);
     color: #000;
 }
 
@@ -38,7 +41,7 @@
 }
 
 .text_prod_item {
-    background-color: #FFF;
+    background-color: rgba( 255, 255, 255, 0.8);
 }
 
 #count_devider {
@@ -50,9 +53,15 @@
 }
 
 .trash {
+    text-align: center;
     padding-top: 0;
     margin-top: 0;
     background-color: rgba(150,0,0,0.1);
+}
+
+.trash_2 {
+    background-color: rgba(150,0,0,0.1);
+    text-align: center;
 }
 
 .icebox {
@@ -70,4 +79,20 @@
 
 .panel_recepr_double_body {
     height: 9.4vw;
+}
+
+.container{
+    width: 70%;   
+}
+
+#editor{
+    display: none;
+}
+
+.new_ob_input{
+     width:6vw;
+}
+
+#prod_result{
+    margin-left: 30%;
 }

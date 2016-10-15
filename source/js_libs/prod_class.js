@@ -13,9 +13,8 @@ function ProductInStore(obj)
 ProductInStore.prototype.toHTML = function()
 {
     var str = "";
-    str += "<div onclick = 'OnItemClick(event);' draggable='true' ";
-    str += "ondragstart='drag(event)' class='thumbnail ";
-    str += "prod_item' style='background-image: url(";
+    str += "<div draggable='true' class='thumbnail prod_item'";
+    str += "style='background-image: url(";
     str += this.image_src+")' ";
     str += "id='"+this.id_html+"'>";
     

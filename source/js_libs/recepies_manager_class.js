@@ -1,6 +1,8 @@
 /*
  * Класс для хранения списка рецептов и
  * оброботки связанных с ними событий
+ *
+ * В конце файла класс самого рецепта
  */
 
 function RecipsManager( recips_list )
@@ -12,7 +14,39 @@ function RecipsManager( recips_list )
         this.repic_list.push( new  Recip( recips_list[i] ) );
 }
 
-RecipsManager.prototype.CreateRecip = function()
+RecipsManager.prototype.AddNewRecip = function()
+{
+    if ( product_manager.result_obj === null )
+        return;
+    
+    var ingr    = [];
+    var count    = [];
+    var icebox_l = product_manager.product_list_in_icebox;
+    
+    for (var i = 0; i < icebox_l.length; i++)
+        if ( icebox_l[i].shelf == 6 )
+        {
+            ingr.push( icebox_l[i].stor_id );
+            count.push( icebox_l[i].count );
+        }
+        
+    if ( ingr.length === 0 )
+        return;
+    
+    var n_recip = {};
+    var r_o = product_manager.result_obj;
+    
+    n_recip.id_html     = r_o.id_html;
+    n_recip.image_src   = r_o.image_src;
+    n_recip.title       = r_o.title;
+    n_recip.text        = $( "text_nrecp" ).value;
+    n_recip.ingr        = ingr;
+    n_recip.count       = count;
+    
+    product_manager.messeger.AppendNewRecipt (  ";\n" + JSON.stringify( n_recip ) );
+};
+
+RecipsManager.prototype.CreateProdOfRecip = function()
 {
     if (this.active_recip === null)
         return false;
@@ -23,7 +57,7 @@ RecipsManager.prototype.CreateRecip = function()
     var icebox_l = product_manager.product_list_in_icebox;
     var ar = this.active_recip;
     
-    //check ingredient
+    //выбираем со стола продукты которые есть в рецепте
     for ( var i =0; i < icebox_l.length; i++)
     {
         if( icebox_l[i].shelf == 5)
@@ -34,18 +68,20 @@ RecipsManager.prototype.CreateRecip = function()
             }
     }
     
+    // ghjdthztv xnj dct nbgs ghjlernjd yf vtcnt
     if ( ing_list.length != ar.ingr.length )
         return false;
     
-    //check count
+    //смотрим в достаточном ли они количестве
     for ( j = 0; j < ar.ingr.length; j++)
         if ( ar.count[j] > ing_list[j].count )
             return false;
     
+    //тратим нужное колво продукта на блюдо
     for ( j = 0; j < ar.ingr.length; j++)
         ing_list[j].count = parseInt( ing_list[j].count ) - parseInt( ar.count[j] );
         
-    // del obj if count == 0
+    // удаляем пустые и темы (если колво после приготовления == 0)
     i = 0;
     while ( i < icebox_l.length )
     {
@@ -57,28 +93,10 @@ RecipsManager.prototype.CreateRecip = function()
     
     var new_obj = product_manager.GetProdInStore ( ar.id_html );
     
-    for ( i = 0; i < icebox_l.length; i++ )
-    {
-        if( icebox_l[i].stor_id == ar.id_html &&
-            icebox_l[i].shelf   == product_manager.active_shelf )
-            {
-                icebox_l[i].count = parseInt ( icebox_l[i].count ) + 1;
-                product_manager.RePrintProductActiveShelfs();
-                
-                return true;
-            }
-    }
-            
-    new_obj = new ProductInIcebox( new_obj,
-                                    product_manager.GetNewId(), 1,
-                                    product_manager.active_shelf );
-    
-    icebox_l.push( new_obj );
-    
-    product_manager.RePrintProductActiveShelfs();
-    
+    product_manager.AddNewProdInIceBox( new_obj, 1 );
+       
     return true;
-}
+};
 
 RecipsManager.prototype.SelectRecipe = function(id)
 {
@@ -148,11 +166,11 @@ Recip.prototype.toHTML = function()
 {
     var str = "";
     
-    str += "<div onclick = 'OnRecipClick(event);'class='thumbnail ";
+    str += "<div class='thumbnail ";
     str += "prod_item' style='background-image: url("+this.image_src+")' id='";
-    str += this.id_html+"'>";
+    str += this.id_html+"$r'>";
     
-    str += "<span class='text_prod_item' id='" + this.id_html + "'>";
+    str += "<span class='text_prod_item' id='" + this.id_html + "$rs'>";
     str += this.title;
     str += "</span></div>";
     

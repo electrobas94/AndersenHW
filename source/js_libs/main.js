@@ -29,41 +29,87 @@ function SetActionsOnDoc()
 {
     window.addEventListener ( "resize", WindowOnResize );
     
-    $( "btn_ok" ).addEventListener( "click", function(){ product_manager.AddProdOnShelf(); } );
+    $( "btn_ok" ).addEventListener( "click", function(){ product_manager.AddProdOnShelfFromStore(); } );
     $( "btn_cancel" ).addEventListener( "click",  function(){product_manager.CountDevederHide();} );
     
     $( "count_range" ).addEventListener( "change" , RangeMove );
     
-    var shelf_1 =$( "shelf_1" );
+    var shelf_1 = $( "shelf_1" );
     shelf_1.addEventListener( "dragover", allowDrop );
 	shelf_1.addEventListener( "click", function(){ product_manager.SelectShelf(1); } );
 	shelf_1.addEventListener( "drop", OnDropShelf );
     
-    var shelf_2 =$( "shelf_2" );
+    var shelf_2 = $( "shelf_2" );
     shelf_2.addEventListener( "dragover", allowDrop );
 	shelf_2.addEventListener( "click", function(){ product_manager.SelectShelf(2); } );
 	shelf_2.addEventListener( "drop", OnDropShelf );
     
-    var shelf_3 =$( "shelf_3" );
+    var shelf_3 = $( "shelf_3" );
     shelf_3.addEventListener( "dragover", allowDrop );
 	shelf_3.addEventListener( "click", function(){ product_manager.SelectShelf(3); } );
 	shelf_3.addEventListener( "drop", OnDropShelf );
     
-    var shelf_4 =$( "shelf_4" );
+    var shelf_4 = $( "shelf_4" );
     shelf_4.addEventListener( "dragover", allowDrop );
 	shelf_4.addEventListener( "click", function(){ product_manager.SelectShelf(4); } );
 	shelf_4.addEventListener( "drop", OnDropShelf );
     
-    $( "trash" ).addEventListener( "dragover", allowDrop );
-    $( "trash" ).addEventListener( "drop", DropInTrash );
+    var trash = $( "trash" );
+    trash.addEventListener( "dragover", allowDrop );
+    trash.addEventListener( "drop", DropInTrash );
     
-    $( "shelf_5" ).addEventListener( "dragover", allowDrop );
-    $( "shelf_5" ).addEventListener( "drop", OnDropShelf );
+    var prod_result = $( "prod_result" );
+    prod_result.addEventListener( "dragover", allowDrop );
+    prod_result.addEventListener( "drop", DropInResult );
     
-    $( "active_shelf" ).addEventListener( "dragover", allowDrop );
-    $( "active_shelf" ).addEventListener( "drop", drop );
+    var trash_2 = $( "trash_2" );
+    trash_2.addEventListener( "dragover", allowDrop );
+    trash_2.addEventListener( "drop", DropInTrash );
     
-    $( "create_new_item" ).addEventListener( "click", OnClickCreateRecip );
+    var shelf_5 = $( "shelf_5" );
+    shelf_5.addEventListener( "dragover", allowDrop );
+    shelf_5.addEventListener( "drop", OnDropShelf );
+    
+    var active_shelf = $( "active_shelf" );
+    active_shelf.addEventListener( "dragover", allowDrop );
+    active_shelf.addEventListener( "drop", drop );
+    
+    $( "create_new_item" ).addEventListener( "click", OnClickCreateProdOfRecip );
+    
+    $( "open_edit" ).addEventListener( "click", OpenEditor );
+    $( "open_icebox" ).addEventListener( "click", OpenIceBox );
+    
+    $( "new_prod" ).addEventListener( "click", function(){ product_manager.AddNewProd(); } );
+    $( "append_recip" ).addEventListener( "click", function(){ product_manager.recip_manager.AddNewRecip(); } );
+}
+
+function OpenIceBox()
+{
+    $( "icebox" ).setAttribute( "style", "display:block;" );
+    $( "editor" ).setAttribute( "style", "display:none;" );
+    $( "recipt_block" ).setAttribute( "style", "display:block;" );
+    $( "stor_head" ).innerHTML = "Магазин";
+    
+    product_manager.SelectShelf( product_manager._prev_active_shelf );
+    
+    $( "store" ).innerHTML = "";
+    
+    window.onload();
+}
+
+function OpenEditor()
+{
+    $( "icebox" ).setAttribute( "style", "display:none;");
+    $( "editor" ).setAttribute( "style", "display:block;");
+    $( "recipt_block" ).setAttribute( "style", "display:none;");
+    
+    $( "pan_hed_shelf" ).innerHTML = "Ингридиенты рецепта <small>(Перетаскиваем сюда)</small>";
+    
+    WindowOnResize();
+    
+    product_manager._prev_active_shelf = active_shelf;
+    
+    product_manager.SelectShelf( 6 );
 }
 
 function allowDrop(ev){
@@ -84,6 +130,20 @@ function drop(ev)
         product_manager.AddProdWindowShow(obg_id);
     else
         product_manager.ChangeShelf(obg_id, product_manager.active_shelf);
+}
+
+function DropInResult(ev)
+{
+    ev.preventDefault();
+    
+    var obg_id = ev.dataTransfer.getData("obg_id");
+    var obj = product_manager.GetProdInStore ( obg_id );
+    
+    if( obj !== null )
+    {
+        $( "prod_result" ).innerHTML =  obj.toHTML();
+        product_manager.result_obj = obj;
+    }
 }
 
 function RangeMove()
@@ -130,12 +190,14 @@ function OnRecipClick(ev)
 {
     var id = ev.target.getAttribute( 'id' );
     
+    id = id.split('$')[0];
+    
     product_manager.recip_manager.SelectRecipe ( id );
 }
 
-function OnClickCreateRecip()
+function OnClickCreateProdOfRecip()
 {
-    if( product_manager.recip_manager.CreateRecip() )
+    if( product_manager.recip_manager.CreateProdOfRecip() )
         $( "res_recip" ).innerHTML = "<span style='color:#65b565'>Создано успешно</span>";
     else
         $( "res_recip" ).innerHTML = "<span style='color:#b56565'>На столе мало продуктов</span>";
