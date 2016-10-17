@@ -68,7 +68,7 @@ RecipsManager.prototype.CreateProdOfRecip = function()
             }
     }
     
-    // ghjdthztv xnj dct nbgs ghjlernjd yf vtcnt
+    // все ли типы игингридиентов есть
     if ( ing_list.length != ar.ingr.length )
         return false;
     
@@ -94,6 +94,8 @@ RecipsManager.prototype.CreateProdOfRecip = function()
     var new_obj = product_manager.GetProdInStore ( ar.id_html );
     
     product_manager.AddNewProdInIceBox( new_obj, 1 );
+    
+    product_manager.RePrintProductActiveShelfs();
        
     return true;
 };

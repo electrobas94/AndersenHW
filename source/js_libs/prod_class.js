@@ -35,10 +35,10 @@ ProductInStore.prototype.toElement = function ()
     
     elem.innerHTML = str;
     
-    elem.addEventListener( "dragstart", DragItem );
+    elem.addEventListener( "dragstart", IceBoxM.dragItem );
     
     return elem;
-}
+};
 
 function ProductInIcebox( obj, new_id_part, count, shelf )
 {
