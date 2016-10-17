@@ -10,13 +10,17 @@ function ProductInStore(obj)
         this[a] = obj[a];
 }
 
-ProductInStore.prototype.toHTML = function()
+ProductInStore.prototype.toElement = function ()
 {
+    var elem = document.createElement( "div" );
+    
+    elem.setAttribute( "draggable", "true");
+    elem.setAttribute( "class", "thumbnail prod_item");
+    elem.setAttribute( "style", "background-image: url('" + this.image_src + "');" );
+    elem.setAttribute( "id", this.id_html );
+    
+    
     var str = "";
-    str += "<div draggable='true' class='thumbnail prod_item'";
-    str += "style='background-image: url(";
-    str += this.image_src+")' ";
-    str += "id='"+this.id_html+"'>";
     
     str += "<span class='text_prod_item'  id='";
     str += this.id_html + "'>";
@@ -28,11 +32,13 @@ ProductInStore.prototype.toHTML = function()
         str += this.id_html + "'>" + this.count + " ";
         str += this.nt + "</small>";
     }
-        
-    str += "</div>";
     
-    return str;
-};
+    elem.innerHTML = str;
+    
+    elem.addEventListener( "dragstart", DragItem );
+    
+    return elem;
+}
 
 function ProductInIcebox( obj, new_id_part, count, shelf )
 {

@@ -44,15 +44,13 @@ ProductManager.prototype.ActivateItemProd = function(id)
     $( "pan_head_replist" ).innerHTML = obj.title + " используться в:";
     
     var r_list = this.recip_manager.GetRecips( id.toString().split("$")[0]  );
-    var r_list_html = $("rep_list");
+    var r_list_html = $( "rep_list" );
     
     r_list_html.innerHTML = "";
     
     for ( var i = 0; i < r_list.length; i++ )
-        r_list_html.innerHTML += r_list[i].toHTML();
+        r_list_html.appendChild( r_list[i].toElement() );
         
-    for ( i = 0; i < r_list.length; i++ )
-        $( r_list[i].id_html+"$r" ).addEventListener ( "click", OnRecipClick );
 };
 
 //Переносит продукт на другую полку
@@ -103,7 +101,7 @@ ProductManager.prototype.SelectShelf = function(num)
 };
 
 // выбрасываем продукт
-ProductManager.prototype.DelProdFromShelf = function(id)
+ProductManager.prototype.DelProdFromShelf = function( id )
 {
     var icebox_l = this.product_list_in_icebox;
         
@@ -113,8 +111,8 @@ ProductManager.prototype.DelProdFromShelf = function(id)
             icebox_l.splice( i, 1 );
             break;
         }
-    
-    this.RePrintProductActiveShelfs();
+        
+    $( "active_shelf" ).removeChild( $( id ) );
 };
 
 
@@ -145,9 +143,7 @@ ProductManager.prototype.AddNewProdInIceBox = function( prod , count )
         var tmp = new ProductInIcebox( prod, this.GetNewId(), count, this.active_shelf);
         
         icebox_l.push(tmp);
-        activ_self.innerHTML += tmp.toHTML();
-        
-        this.ReSetActionIceBoxItem();
+        activ_self.appendChild( tmp.toElement() );
     }
 };
 
@@ -222,14 +218,7 @@ ProductManager.prototype.PrintProductsStore = function()
     var stor_l = this.product_list_store;
     
     for( var i = 0; i < stor_l.length; i++ )
-        conteiner.innerHTML += stor_l[i].toHTML();
-        
-    // При редактировании содержимого контейнера эвенты отваливаются
-    // innerHTML = <b id =1></b><b id =2></b
-    //innerHTML = <b id =3></b> // сбросит назначеные события у первых двух
-    
-    for( i = 0; i < stor_l.length; i++ ) 
-        this.SetItemAction( stor_l[i].id_html );
+        conteiner.appendChild( stor_l[i].toElement() );
 };
 
 ProductManager.prototype.RePrintProductActiveShelfs = function()
@@ -253,31 +242,13 @@ ProductManager.prototype.PrintProductActiveShelfs = function()
     for( var i = 0; i < icebox_l.length; i++ )
     {
         if( this.active_shelf == icebox_l[i].shelf )
-            obj.innerHTML += icebox_l[i].toHTML();
+        {
+            obj.appendChild( icebox_l[i].toElement() );
+        }
         else if ( +icebox_l[i].shelf == 5 )                             // если на столе лежит тож показываем
-            s_5.innerHTML += icebox_l[i].toHTML();
+            s_5.appendChild( icebox_l[i].toElement() );
     }
-            
-    this.ReSetActionIceBoxItem();
-    
-};
-
-ProductManager.prototype.ReSetActionIceBoxItem = function ()
-{
-    var icebox_l = this.product_list_in_icebox;
-    
-    for( i = 0; i < icebox_l.length; i++ )
-        if( this.active_shelf == icebox_l[i].shelf )
-            this.SetItemAction( icebox_l[i].id_html );
-        else if ( +icebox_l[i].shelf == 5 ) // если на столе лежит
-            this.SetItemAction( icebox_l[i].id_html );
-}
-
-ProductManager.prototype.SetItemAction = function( id )
-{
-    var tmp = $( id );
-    tmp.addEventListener( "click", OnItemClick );
-    tmp.addEventListener( "dragstart", drag );
+             
 };
 
 // Добавляет новый продукт на сервер

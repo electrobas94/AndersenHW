@@ -121,7 +121,7 @@ RecipsManager.prototype.SelectRecipe = function(id)
     for(i = 0; i < n_prod_l.length; i++ )
     {
         n_prod_l[i] = new ProductInIcebox ( n_prod_l[i], "d", ar.count[i], -1);
-        need_ingr.innerHTML += n_prod_l[i].toHTML();
+        need_ingr.appendChild( n_prod_l[i].toElement() );
     }
 };
 
@@ -162,17 +162,22 @@ function Recip( obj )
         this[a] = obj[a];
 }
 
-Recip.prototype.toHTML = function()
+Recip.prototype.toElement = function()
 {
-    var str = "";
+    var elem = document.createElement( "div" );
     
-    str += "<div class='thumbnail ";
-    str += "prod_item' style='background-image: url("+this.image_src+")' id='";
-    str += this.id_html+"$r'>";
+    elem.setAttribute( "class", "thumbnail prod_item");
+    elem.setAttribute( "style", "background-image: url('" + this.image_src + "');" );
+    elem.setAttribute( "id", this.id_html +"$r" );
+    
+    
+    var str = "";
     
     str += "<span class='text_prod_item' id='" + this.id_html + "$rs'>";
     str += this.title;
-    str += "</span></div>";
+    str += "</span>";
     
-    return str;
-};
+    elem.innerHTML = str;
+  
+    return elem;
+}
